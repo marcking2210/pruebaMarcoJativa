@@ -1,0 +1,42 @@
+<div class="alert alert-danger" role="alert" *ngIf="_message.length > 0">
+    {{_message}}
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">NOMBRES</th>
+        <th scope="col">APELLIDOS</th>
+        <th scope="col"></th>
+        <th scope="col"><button class="btn btn-success" (click)="open(0, content)">NUEVO</button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let client of _clients; index as i">
+        <td>{{ client.clientName }}</td>
+        <td>{{ client.clientLastName }}</td>
+        <td><button class="btn btn-primary" (click)="open(client.id, content)">ACTUALIZAR</button></td>
+        <td><button class="btn btn-danger" (click)="deleteClient(client.id)">ELIMINAR</button></td>
+      </tr>
+    </tbody>
+  </table>
+   
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">NUEVO/ACTUALIZAR CLIENTE</h4>
+      <button type="button" class="close"
+        aria-label="Close" (click)="modal.dismiss('Cross click')" *ngIf="_client.id === 0">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="createUpdate()">
+        <div class="form-group">
+          <h2>Nombres</h2>
+          <input type="text" name="clentName" placeholder="Nombres" [(ngModel)]="_client.clientName"/>
+          <h2>Apellidos</h2>
+          <!--input type="number" name="clientLastName" [(ngModel)]="_client.clientLastName"/-->
+          <input type="text" name="clentLastName" placeholder="Apellidos" [(ngModel)]="_client.clientLastName"/>
+        </div>
+        <button type="submit" class="btn btn-success">GUARDAR</button>
+      </form>
+  </div>

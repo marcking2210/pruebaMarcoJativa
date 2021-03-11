@@ -1,0 +1,50 @@
+<div class="alert alert-danger" role="alert" *ngIf="_message.length > 0">
+    {{_message}}
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">CODIGO</th>
+        <th scope="col">FECHA</th>
+        <th scope="col">CLIENTE</th>
+        <th scope="col">PRODUCTO</th>
+        <th scope="col"></th>
+        <th scope="col"><button class="btn btn-success" (click)="open(0, content)">NUEVO</button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of _orders; index as i">
+        <td>{{ order.orderCode }}</td>
+        <td>{{ order.orderDate }}</td>
+        <td>{{ order.clientId}</td>
+        <td>{{ order.productId}</td>
+        <td><button class="btn btn-primary" (click)="open(order.id, content)">ACTUALIZAR</button></td>
+        <td><button class="btn btn-danger" (click)="deleteOrder(order.id)">ELIMINAR</button></td>
+      </tr>
+    </tbody>
+  </table>
+   
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">NUEVO/ACTUALIZAR ORDEN</h4>
+      <button type="button" class="close"
+        aria-label="Close" (click)="modal.dismiss('Cross click')" *ngIf="_order.id === 0">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="createUpdate()">
+        <div class="form-group">
+          <h2>CODIGO</h2>
+          <input type="text" name="orderCode" placeholder="Código" [(ngModel)]="_order.orderCode"/>
+          <h2>FECHA</h2>
+          <input type="text" name="orderDate" placeholder="Fecha" [(ngModel)]="_order.orderDate"/>
+          <h2>CLIENTE</h2>
+          <input type="text" name="orderClient" placeholder="Cliente" [(ngModel)]="_order.clientId"/>
+          <h2>PRODUCTO</h2>
+          <input type="text" name="orderProduct" placeholder="Product" [(ngModel)]="_order.productId"/>
+        </div>
+        <button type="submit" class="btn btn-success">GUARDAR</button>
+      </form>
+  </div>
+

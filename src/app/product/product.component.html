@@ -1,0 +1,46 @@
+<div class="alert alert-danger" role="alert" *ngIf="_message.length > 0">
+    {{_message}}
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">CODIGO</th>
+        <th scope="col">NOMBRE</th>
+        <th scope="col">PRECIO</th>
+        <th scope="col"></th>
+        <th scope="col"><button class="btn btn-success" (click)="open(0, content)">NUEVO</button></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of _products; index as i">
+        <td>{{ product.productCode }}</td>
+        <td>{{ product.productName }}</td>
+        <td>{{ product.productPrice }}</td>
+        <td><button class="btn btn-primary" (click)="open(product.id, content)">ACTUALIZAR</button></td>
+        <td><button class="btn btn-danger" (click)="deleteProduct(product.id)">ELIMINAR</button></td>
+      </tr>
+    </tbody>
+  </table>
+   
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">NUEVO/ACTUALIZAR PRODUCTO</h4>
+      <button type="button" class="close"
+        aria-label="Close" (click)="modal.dismiss('Cross click')" *ngIf="_product.id === 0">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="createUpdate()">
+        <div class="form-group">
+          <h2>CODIGO</h2>
+          <input type="text" name="productCode" placeholder="Código" [(ngModel)]="_product.productCode"/>
+          <h2>NOMBRE</h2>
+          <input type="text" name="productName" placeholder="Nombre" [(ngModel)]="_product.productName"/>
+          <h2>PRECIO</h2>
+          <input type="number" name="productPrice" [(ngModel)]="_product.productPrice"/>
+        </div>
+        <button type="submit" class="btn btn-success">GUARDAR</button>
+      </form>
+  </div>
+
